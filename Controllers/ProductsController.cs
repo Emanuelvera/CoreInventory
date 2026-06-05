@@ -20,4 +20,15 @@ public class ProductsController : ControllerBase
     {
         return Ok(_productService.GetAll());
     }
+
+    [HttpGet("{id}")]
+    public ActionResult<Product> GetById(int id)
+    {
+        var product = _productService.GetById(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return Ok(product);
+    }
 }

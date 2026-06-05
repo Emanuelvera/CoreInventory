@@ -35,4 +35,9 @@ public class InMemoryProductService
     {
         return products;
     }
+
+    public Product GetById(int id)
+    {
+        return products.FirstOrDefault(p => p.Id == id);
+    }
 }
