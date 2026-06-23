@@ -40,4 +40,9 @@ public class InMemoryProductService
     {
         return products.FirstOrDefault(p => p.Id == id);
     }
+
+    public void Delete(Product product)
+    {
+        products.Remove(product);
+    }
 }
