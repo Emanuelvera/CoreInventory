@@ -1,0 +1,42 @@
+@page "/products/create"
+@inject ApiService ApiService
+@inject NavigationManager Navigation
+
+<PageTitle>Create Product</PageTitle>
+
+<h3>Create Product</h3>
+
+<EditForm Model="@product" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <InputText id="name" @bind-Value="product.Name" class="form-control" />
+        <ValidationMessage For="@(() => product.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="code" class="form-label">Code</label>
+        <InputText id="code" @bind-Value="product.Code" class="form-control" />
+        <ValidationMessage For="@(() => product.Code)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="stock" class="form-label">Stock</label>
+        <InputNumber id="stock" @bind-Value="product.Stock" class="form-control" />
+        <ValidationMessage For="@(() => product.Stock)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a href="/products" class="btn btn-secondary">Cancel</a>
+</EditForm>
+
+@code {
+    private Product product = new();
+
+    private async Task HandleSubmit()
+    {
+        await ApiService.CreateAsync(product);
+        Navigation.NavigateTo("/products");
+    }
+}

@@ -1,0 +1,66 @@
+@page "/products/edit/{id:int}"
+@inject ApiService ApiService
+@inject NavigationManager Navigation
+
+<PageTitle>Edit Product</PageTitle>
+
+<h3>Edit Product</h3>
+
+@if (loading)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (product == null)
+{
+    <p class="text-danger">Product not found.</p>
+    <a href="/products" class="btn btn-secondary">Back</a>
+}
+else
+{
+    <EditForm Model="@product" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <InputText id="name" @bind-Value="product.Name" class="form-control" />
+            <ValidationMessage For="@(() => product.Name)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="code" class="form-label">Code</label>
+            <InputText id="code" @bind-Value="product.Code" class="form-control" />
+            <ValidationMessage For="@(() => product.Code)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <InputNumber id="stock" @bind-Value="product.Stock" class="form-control" />
+            <ValidationMessage For="@(() => product.Stock)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/products" class="btn btn-secondary">Cancel</a>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Product? product;
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ApiService.GetByIdAsync(Id);
+        loading = false;
+    }
+
+    private async Task HandleSubmit()
+    {
+        await ApiService.UpdateAsync(Id, product!);
+        Navigation.NavigateTo("/products");
+    }
+}

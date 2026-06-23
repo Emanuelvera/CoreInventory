@@ -1,0 +1,54 @@
+@page "/products"
+@inject ApiService ApiService
+@inject NavigationManager Navigation
+
+<PageTitle>Products</PageTitle>
+
+<h3>Products</h3>
+
+@if (products == null)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Stock</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Code</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <a href="products/edit/@product.Id" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="products/delete/@product.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a href="products/create" class="btn btn-success">Create New</a>
+
+@code {
+    private List<Product>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ApiService.GetAllAsync();
+    }
+}

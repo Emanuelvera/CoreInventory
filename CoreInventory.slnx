@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CoreInventory.csproj" />
+  <Project Path="src/CoreInventory.Web/CoreInventory.Web.csproj" />
+</Solution>
