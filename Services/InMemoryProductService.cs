@@ -36,7 +36,7 @@ public class InMemoryProductService
         return products;
     }
 
-    public Product GetById(int id)
+    public Product? GetById(int id)
     {
         return products.FirstOrDefault(p => p.Id == id);
     }
@@ -44,5 +44,23 @@ public class InMemoryProductService
     public void Delete(Product product)
     {
         products.Remove(product);
+    }
+
+    public Product Add(Product product)
+    {
+        product.Id = products.Any() ? products.Max(p => p.Id) + 1 : 1;
+        products.Add(product);
+        return product;
+    }
+
+    public Product? Update(int id, Product updatedProduct)
+    {
+        var existing = products.FirstOrDefault(p => p.Id == id);
+        if (existing == null) return null;
+
+        existing.Name = updatedProduct.Name;
+        existing.Code = updatedProduct.Code;
+        existing.Stock = updatedProduct.Stock;
+        return existing;
     }
 }

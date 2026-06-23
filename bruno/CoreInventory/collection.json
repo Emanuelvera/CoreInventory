@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "name": "CoreInventory",
+  "type": "collection",
+  "requests": [
+    {
+      "name": "Ping",
+      "request": "ping.bru"
+    },
+    {
+      "name": "Get All Products",
+      "request": "get-products.bru"
+    },
+    {
+      "name": "Get Product By Id",
+      "request": "get-product-by-id.bru"
+    },
+    {
+      "name": "Create Product",
+      "request": "create-product.bru"
+    },
+    {
+      "name": "Update Product",
+      "request": "update-product.bru"
+    },
+    {
+      "name": "Delete Product",
+      "request": "delete-product.bru"
+    }
+  ]
+}

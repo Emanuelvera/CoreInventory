@@ -43,4 +43,28 @@ public class ProductsController : ControllerBase
         _productService.Delete(product);
         return NoContent();
     }
+
+    [HttpPost]
+    public ActionResult<Product> Create(Product product)
+    {
+        var created = _productService.Add(product);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, Product product)
+    {
+        if (id != product.Id)
+        {
+            return BadRequest();
+        }
+
+        var updated = _productService.Update(id, product);
+        if (updated == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(updated);
+    }
 }
